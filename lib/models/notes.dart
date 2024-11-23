@@ -1,5 +1,4 @@
 class Notes {
-  final int id;
   final String note;
   final bool state;
 

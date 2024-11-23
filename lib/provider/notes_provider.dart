@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:note_app/models/notes.dart';
 
 class NotesProvider extends ChangeNotifier {
-  List<Notes> notes = [];
+  List<Notes> notes = [
+    Notes(note: "note", state: false)
+  ];
 
-  void addNotes ({required String title}){
-    notes.add(Notes(note: title, state: false));
+  TextEditingController noteController = TextEditingController();
+
+
+  void addNotes (BuildContext context){
+    if (noteController.text.isNotEmpty){
+      notes.add(Notes(note: noteController.text, state: false));
+      noteController.clear();
+      Navigator.of(context).pop();
+    }else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("لا يمكن إضافة ملاحظة فارغة")));
+    }
     notifyListeners();
   }
 
